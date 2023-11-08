@@ -53,6 +53,7 @@ function App() {
 				setModalIsOpen(true);
 			} else {
 				setCookiesAllowed(localStorageCookiesAllowed);
+				setNumberOfToggles(-1);
 			}
 		})();
 
@@ -64,7 +65,9 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		setNumberOfToggles((n) => n + 1);
+		if (cookiesAllowed) {
+			setNumberOfToggles((n) => n + 1);
+		}
 	}, [jobs, skills]);
 
 	const handleJobToggle = (job: IJob) => {
@@ -97,13 +100,14 @@ function App() {
 	const handleCookiesDecline = () => {
 		setModalIsOpen(false);
 		setCookiesAllowed(false);
-		localStorage.setItem('cookiesAllowed', 'false');
+		localStorage.setItem("cookiesAllowed", "false");
 	};
 
 	const handleCookiesAccept = () => {
 		setModalIsOpen(false);
 		setCookiesAllowed(true);
-		localStorage.setItem('cookiesAllowed', 'true');
+		localStorage.setItem("cookiesAllowed", "true");
+		setNumberOfToggles(0);
 	};
 
 	// const handleCookiesAccept = () => {
@@ -114,8 +118,11 @@ function App() {
 		<>
 			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
 				<h1 className="text-3xl ">Info Site</h1>
-				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
-				<p className="text-red-500">{cookiesAllowed ? 'allowed' : 'not allowed'}</p>
+				{cookiesAllowed && (
+					<p className="text-yellow-200">
+						Toggles: {numberOfToggles}
+					</p>
+				)}
 			</header>
 			<ReactModal
 				isOpen={modalIsOpen}
