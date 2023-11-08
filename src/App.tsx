@@ -10,6 +10,7 @@ const skillsUrl = "https://edwardtanguay.vercel.app/share/skills_with_id.json";
 function App() {
 	const [jobs, setJobs] = useState<IJob[]>([]);
 	const [skills, setSkills] = useState<ISkill[]>([]);
+	const [numberOfToggles, setNumberOfToggles] = useState(0);
 
 	useEffect(() => {
 		// IIFE
@@ -48,8 +49,8 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		console.log('jobs or skills changed' + Math.random())
-	}, [jobs, skills])
+		console.log("jobs or skills changed" + Math.random());
+	}, [jobs, skills]);
 
 	const handleJobToggle = (job: IJob) => {
 		jobs.forEach((m) => {
@@ -74,7 +75,10 @@ function App() {
 	};
 	return (
 		<>
-			<h1 className="text-3xl mb-3 text-slate-800">Info Site</h1>
+			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
+				<h1 className="text-3xl ">Info Site</h1>
+				<p>Toggles: {numberOfToggles}</p>
+			</header>
 			<div className="flex justify-around">
 				<section>
 					<h2 className="text-xl mb-3">
@@ -110,13 +114,38 @@ function App() {
 											<p>{job.company}</p>
 											<p>{job.publicationDate}</p>
 											<p>
-												{job.skills.map((skill, index) => {
-													return (
-														<React.Fragment key={index}>
-														<a onClick={(e) => {e.stopPropagation()}} title={skill.description} target="_blank" className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
-														</React.Fragment>
-													)
-												})}
+												{job.skills.map(
+													(skill, index) => {
+														return (
+															<React.Fragment
+																key={index}
+															>
+																<a
+																	onClick={(
+																		e
+																	) => {
+																		e.stopPropagation();
+																	}}
+																	title={
+																		skill.description
+																	}
+																	target="_blank"
+																	className="underline"
+																	href={
+																		skill.url
+																	}
+																>
+																	{skill.name}
+																</a>
+																{index <
+																	job.skills
+																		.length -
+																		1 &&
+																	", "}
+															</React.Fragment>
+														);
+													}
+												)}
 											</p>
 										</div>
 									)}
