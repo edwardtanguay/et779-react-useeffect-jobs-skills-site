@@ -108,7 +108,7 @@ function App() {
 												{job.skills.map((skill, index) => {
 													return (
 														<>
-														<a target="_blank" className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
+														<a onClick={(e) => {e.stopPropagation()}} title={skill.description} target="_blank" className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
 														</>
 													)
 												})}
