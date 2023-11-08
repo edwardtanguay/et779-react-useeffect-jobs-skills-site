@@ -15,6 +15,9 @@ function App() {
 		(async () => {
 			const response = await axios.get(jobsUrl);
 			const _jobs: IJob[] = response.data;
+			for (const _job of _jobs) {
+				_job.isOpen = false;
+			}
 			setJobs(_jobs);
 		})();
 
@@ -52,6 +55,12 @@ function App() {
 								className="bg-slate-400 w-80 p-2 mb-2 rounded"
 							>
 								<p>{job.title}</p>
+								{job.isOpen && (
+									<>
+										<p>{job.company}</p>
+										<p>{job.publicationDate}</p>
+									</>
+								)}
 							</div>
 						);
 					})}

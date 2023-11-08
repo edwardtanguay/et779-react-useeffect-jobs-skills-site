@@ -1,11 +1,12 @@
 export interface IJob {
+	isOpen: boolean;
 	id: number;
 	title: string;
 	company: string;
 	url: string;
 	description: string;
 	skillList: string;
-	pulicationDate: string;
+	publicationDate: string;
 }
 
 export interface ISkill {
