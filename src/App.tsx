@@ -10,7 +10,7 @@ const skillsUrl = "https://edwardtanguay.vercel.app/share/skills_with_id.json";
 function App() {
 	const [jobs, setJobs] = useState<IJob[]>([]);
 	const [skills, setSkills] = useState<ISkill[]>([]);
-	const [numberOfToggles, setNumberOfToggles] = useState(0);
+	const [numberOfToggles, setNumberOfToggles] = useState(-3);
 
 	useEffect(() => {
 		// IIFE
@@ -49,7 +49,7 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		console.log("jobs or skills changed" + Math.random());
+		setNumberOfToggles(n => n + 1);
 	}, [jobs, skills]);
 
 	const handleJobToggle = (job: IJob) => {
@@ -77,7 +77,7 @@ function App() {
 		<>
 			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
 				<h1 className="text-3xl ">Info Site</h1>
-				<p>Toggles: {numberOfToggles}</p>
+				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
 			</header>
 			<div className="flex justify-around">
 				<section>
