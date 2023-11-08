@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IJob, ISkill } from "./interfaces";
 import axios from "axios";
 import { ImSpinner9 } from "react-icons/im";
+import React from "react";
 
 const jobsUrl = "https://edwardtanguay.vercel.app/share/jobs.json";
 const skillsUrl = "https://edwardtanguay.vercel.app/share/skills_with_id.json";
@@ -45,6 +46,10 @@ function App() {
 		//             setJobs(response?.data? [])
 		//         );
 	}, []);
+
+	useEffect(() => {
+		console.log('jobs or skills changed' + Math.random())
+	}, [jobs, skills])
 
 	const handleJobToggle = (job: IJob) => {
 		jobs.forEach((m) => {
@@ -107,9 +112,9 @@ function App() {
 											<p>
 												{job.skills.map((skill, index) => {
 													return (
-														<>
+														<React.Fragment key={index}>
 														<a onClick={(e) => {e.stopPropagation()}} title={skill.description} target="_blank" className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
-														</>
+														</React.Fragment>
 													)
 												})}
 											</p>
