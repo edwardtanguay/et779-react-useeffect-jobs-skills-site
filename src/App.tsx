@@ -11,17 +11,17 @@ function App() {
 
 	useEffect(() => {
 		// IIFE
-		(async () => {
+		setTimeout(async () => {
 			const response = await axios.get(jobsUrl);
 			const _jobs: IJob[] = response.data;
 			setJobs(_jobs);
-		})();
+		}, 3000);
 
-		(async () => {
+		setTimeout(async () => {
 			const response = await axios.get(skillsUrl);
 			const _skills: ISkill[] = response.data;
 			setSkills(_skills);
-		})();
+		}, 2000);
 
 		// one could also use then() but it has a less aesthetic syntax
 		//  axios.get('')
@@ -36,7 +36,11 @@ function App() {
 			<div className="flex justify-around">
 				<section>
 					<h2 className="text-xl mb-3">
-						There are {jobs.length} jobs.
+						{jobs.length === 0 ? (
+							<div>Loading...</div>
+						) : (
+							<div>There are {jobs.length} jobs.</div>
+						)}
 					</h2>
 					{jobs.map((job) => {
 						return (
@@ -51,7 +55,11 @@ function App() {
 				</section>
 				<section>
 					<h2 className="text-xl mb-3">
-						There are {skills.length} skills.
+						{skills.length === 0 ? (
+							<div>Loading...</div>
+						) : (
+							<div>There are {skills.length} skills.</div>
+						)}
 					</h2>
 					{skills.map((skill) => {
 						return (
