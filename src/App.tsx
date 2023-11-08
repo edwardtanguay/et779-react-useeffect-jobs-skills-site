@@ -108,7 +108,7 @@ function App() {
 												{job.skills.map((skill, index) => {
 													return (
 														<>
-														<a className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
+														<a target="_blank" className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
 														</>
 													)
 												})}
