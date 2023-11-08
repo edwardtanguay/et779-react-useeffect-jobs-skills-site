@@ -105,10 +105,10 @@ function App() {
 											<p>{job.company}</p>
 											<p>{job.publicationDate}</p>
 											<p>
-												{job.skills.map((skill) => {
+												{job.skills.map((skill, index) => {
 													return (
 														<>
-														<a className="underline" href={skill.url}>{skill.name}</a>,{' '}
+														<a className="underline" href={skill.url}>{skill.name}</a>{index < job.skills.length - 1 && ', '}
 														</>
 													)
 												})}
