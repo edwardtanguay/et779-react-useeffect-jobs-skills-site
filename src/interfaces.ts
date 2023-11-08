@@ -10,6 +10,7 @@ export interface IJob {
 }
 
 export interface ISkill {
+	isOpen: boolean;
 	id: number;
 	idCode: string;
 	name: string;

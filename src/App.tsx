@@ -24,6 +24,9 @@ function App() {
 		(async () => {
 			const response = await axios.get(skillsUrl);
 			const _skills: ISkill[] = response.data;
+			for (const _skill of _skills) {
+				_skill.isOpen = false;
+			}
 			setSkills(_skills);
 		})();
 
@@ -34,6 +37,27 @@ function App() {
 		//         );
 	}, []);
 
+	const handleJobToggle = (job: IJob) => {
+		jobs.forEach((m) => {
+			if (m.id !== job.id) {
+				m.isOpen = false;
+			}
+		});
+		job.isOpen = !job.isOpen;
+		const _jobs = structuredClone(jobs);
+		setJobs(_jobs);
+	};
+
+	const handleSkillToggle = (skill: ISkill) => {
+		skills.forEach((m) => {
+			if (m.id !== skill.id) {
+				m.isOpen = false;
+			}
+		});
+		skill.isOpen = !skill.isOpen;
+		const _skills = structuredClone(skills);
+		setSkills(_skills);
+	};
 	return (
 		<>
 			<h1 className="text-3xl mb-3 text-slate-800">Info Site</h1>
@@ -48,22 +72,32 @@ function App() {
 							<div>There are {jobs.length} jobs.</div>
 						)}
 					</h2>
+					<div className={`${jobs.length !== 0 ? "opacity-100" : "opacity-0"} transition-opacity duration-1000 ease-in-out`}>
 					{jobs.map((job) => {
 						return (
 							<div
 								key={job.id}
-								className="bg-slate-400 w-80 p-2 mb-2 rounded"
+								className="cursor-pointer bg-slate-400 w-80 p-2 mb-2 rounded select-none"
+								onClick={() => handleJobToggle(job)}
 							>
-								<p>{job.title}</p>
+								<p
+									className={`${
+										job.isOpen ? "font-bold" : ""
+									}`}
+								>
+									{job.title}
+								</p>
 								{job.isOpen && (
-									<>
+									<div className="text-orange-900">
 										<p>{job.company}</p>
 										<p>{job.publicationDate}</p>
-									</>
+										<p>{job.skillList}</p>
+									</div>
 								)}
 							</div>
 						);
 					})}
+					</div>
 				</section>
 				<section>
 					<h2 className="text-xl mb-3">
@@ -79,9 +113,15 @@ function App() {
 						return (
 							<div
 								key={skill.id}
-								className="bg-gray-400 w-80 p-2 mb-2 rounded"
+								className="select-none cursor-pointer bg-gray-400 w-80 p-2 mb-2 rounded"
+								onClick={() => handleSkillToggle(skill)}
 							>
 								<p>{skill.name}</p>
+								{skill.isOpen && (
+									<div className="text-orange-900">
+										<p>{skill.description}</p>
+									</div>
+								)}
 							</div>
 						);
 					})}
