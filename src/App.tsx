@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { IJob, ISkill } from "./interfaces";
 import axios from "axios";
 import { ImSpinner9 } from "react-icons/im";
+import { FaRegWindowClose } from "react-icons/fa";
 import React from "react";
+import ReactModal from "react-modal";
 
 const jobsUrl = "https://edwardtanguay.vercel.app/share/jobs.json";
 const skillsUrl = "https://edwardtanguay.vercel.app/share/skills_with_id.json";
@@ -11,6 +13,7 @@ function App() {
 	const [jobs, setJobs] = useState<IJob[]>([]);
 	const [skills, setSkills] = useState<ISkill[]>([]);
 	const [numberOfToggles, setNumberOfToggles] = useState(-3);
+	const [modalIsOpen, setModalIsOpen] = useState(false);
 
 	useEffect(() => {
 		// IIFE
@@ -49,7 +52,7 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		setNumberOfToggles(n => n + 1);
+		setNumberOfToggles((n) => n + 1);
 	}, [jobs, skills]);
 
 	const handleJobToggle = (job: IJob) => {
@@ -73,12 +76,20 @@ function App() {
 		const _skills = structuredClone(skills);
 		setSkills(_skills);
 	};
+
+	const handleModalClose = () => {
+		setModalIsOpen(false);
+	};
 	return (
 		<>
 			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
 				<h1 className="text-3xl ">Info Site</h1>
 				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
 			</header>
+			<button onClick={() => setModalIsOpen(true)}>Open Modal</button>
+			<ReactModal isOpen={modalIsOpen} onRequestClose={handleModalClose} className="flex justify-end p-4 mx-auto mt-20 w-1/2 bg-slate-400">
+				<button className="flex justify-center items-center" onClick={() => setModalIsOpen(false)}><FaRegWindowClose /></button>
+			</ReactModal>
 			<div className="flex justify-around">
 				<section>
 					<h2 className="text-xl mb-3">
