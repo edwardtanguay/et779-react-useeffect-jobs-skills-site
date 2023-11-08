@@ -27,11 +27,11 @@ function App() {
 	return (
 		<>
 			<h1 className="text-3xl mb-3 text-slate-800">Info Site</h1>
-			<p>There are {jobs.length} jobs.</p>
+			<h2 className="text-xl mb-3">There are {jobs.length} jobs.</h2>
 			<section>
 				{jobs.map(job => {
 					return (
-						<div key={job.id}>
+						<div key={job.id} className="bg-slate-400 w-80 p-2 mb-2 rounded">
 							<p>{job.title}</p>
 						</div>
 					)
