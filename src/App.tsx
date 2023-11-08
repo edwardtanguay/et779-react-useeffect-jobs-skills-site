@@ -42,6 +42,7 @@ function App() {
 				_job.skills = _jobSkills;
 			}
 			setJobs(_jobs);
+			setModalIsOpen(true)
 		})();
 
 		// one could also use then() but it has a less aesthetic syntax
@@ -86,7 +87,6 @@ function App() {
 				<h1 className="text-3xl ">Info Site</h1>
 				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
 			</header>
-			<button onClick={() => setModalIsOpen(true)}>Open Modal</button>
 			<ReactModal isOpen={modalIsOpen} onRequestClose={handleModalClose} className="flex justify-end p-4 mx-auto mt-20 w-1/2 bg-slate-400">
 				<button className="flex justify-center items-center" onClick={() => setModalIsOpen(false)}><FaRegWindowClose /></button>
 			</ReactModal>
