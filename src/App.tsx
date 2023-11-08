@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IJob, ISkill } from "./interfaces";
 import axios from "axios";
+import { ImSpinner9 } from "react-icons/im";
 
 const jobsUrl = "https://edwardtanguay.vercel.app/share/jobs.json";
 const skillsUrl = "https://edwardtanguay.vercel.app/share/skills_with_id.json";
@@ -11,17 +12,17 @@ function App() {
 
 	useEffect(() => {
 		// IIFE
-		setTimeout(async () => {
+		(async () => {
 			const response = await axios.get(jobsUrl);
 			const _jobs: IJob[] = response.data;
 			setJobs(_jobs);
-		}, 3000);
+		})();
 
-		setTimeout(async () => {
+		(async () => {
 			const response = await axios.get(skillsUrl);
 			const _skills: ISkill[] = response.data;
 			setSkills(_skills);
-		}, 2000);
+		})();
 
 		// one could also use then() but it has a less aesthetic syntax
 		//  axios.get('')
@@ -37,7 +38,9 @@ function App() {
 				<section>
 					<h2 className="text-xl mb-3">
 						{jobs.length === 0 ? (
-							<div>Loading...</div>
+							<div>
+								<ImSpinner9 className="animate-spin text-4xl text-slate-400" />
+							</div>
 						) : (
 							<div>There are {jobs.length} jobs.</div>
 						)}
@@ -56,7 +59,9 @@ function App() {
 				<section>
 					<h2 className="text-xl mb-3">
 						{skills.length === 0 ? (
-							<div>Loading...</div>
+							<div>
+								<ImSpinner9 className="animate-spin text-4xl text-slate-400" />
+							</div>
 						) : (
 							<div>There are {skills.length} skills.</div>
 						)}
