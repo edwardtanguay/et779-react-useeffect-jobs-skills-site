@@ -14,6 +14,7 @@ function App() {
 	const [skills, setSkills] = useState<ISkill[]>([]);
 	const [numberOfToggles, setNumberOfToggles] = useState(-3);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
+	const [cookiesAllowed, setCookiesAllowed] = useState(false);
 
 	useEffect(() => {
 		// IIFE
@@ -42,7 +43,17 @@ function App() {
 				_job.skills = _jobSkills;
 			}
 			setJobs(_jobs);
-			setModalIsOpen(true);
+
+			// cookie logic
+			const localStorageCookiesAllowedString =
+				localStorage.getItem("cookiesAllowed");
+			const localStorageCookiesAllowed =
+				localStorageCookiesAllowedString === "true";
+			if (localStorageCookiesAllowedString === null) {
+				setModalIsOpen(true);
+			} else {
+				setCookiesAllowed(localStorageCookiesAllowed);
+			}
 		})();
 
 		// one could also use then() but it has a less aesthetic syntax
@@ -80,10 +91,19 @@ function App() {
 
 	const handleCookiesClose = () => {
 		setModalIsOpen(false);
+		setCookiesAllowed(false);
 	};
 
 	const handleCookiesDecline = () => {
 		setModalIsOpen(false);
+		setCookiesAllowed(false);
+		localStorage.setItem('cookiesAllowed', 'false');
+	};
+
+	const handleCookiesAccept = () => {
+		setModalIsOpen(false);
+		setCookiesAllowed(true);
+		localStorage.setItem('cookiesAllowed', 'true');
 	};
 
 	// const handleCookiesAccept = () => {
@@ -95,6 +115,7 @@ function App() {
 			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
 				<h1 className="text-3xl ">Info Site</h1>
 				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
+				<p className="text-red-500">{cookiesAllowed ? 'allowed' : 'not allowed'}</p>
 			</header>
 			<ReactModal
 				isOpen={modalIsOpen}
@@ -123,7 +144,7 @@ function App() {
 					have an effect on your browsing experience.
 				</p>
 				<div className="flex gap-3 mt-3">
-					<button>Accept</button>
+					<button onClick={handleCookiesAccept}>Accept</button>
 					<button onClick={handleCookiesDecline}>Decline</button>
 				</div>
 			</ReactModal>
