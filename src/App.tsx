@@ -13,21 +13,30 @@ function App() {
 	useEffect(() => {
 		// IIFE
 		(async () => {
-			const response = await axios.get(jobsUrl);
-			const _jobs: IJob[] = response.data;
-			for (const _job of _jobs) {
-				_job.isOpen = false;
-			}
-			setJobs(_jobs);
-		})();
-
-		(async () => {
-			const response = await axios.get(skillsUrl);
-			const _skills: ISkill[] = response.data;
+			const _skills: ISkill[] = (await axios.get(skillsUrl)).data;
 			for (const _skill of _skills) {
 				_skill.isOpen = false;
 			}
 			setSkills(_skills);
+
+			const _jobs: IJob[] = (await axios.get(jobsUrl)).data;
+			for (const _job of _jobs) {
+				_job.isOpen = false;
+
+				const _jobSkills: ISkill[] = [];
+				for (const skillIdCode of _job.skillList
+					.split(",")
+					.map((m) => m.trim())) {
+					const _skill = _skills.find(
+						(m) => m.idCode === skillIdCode
+					);
+					if (_skill) {
+						_jobSkills.push(_skill);
+					}
+				}
+				_job.skills = _jobSkills;
+			}
+			setJobs(_jobs);
 		})();
 
 		// one could also use then() but it has a less aesthetic syntax
@@ -72,31 +81,43 @@ function App() {
 							<div>There are {jobs.length} jobs.</div>
 						)}
 					</h2>
-					<div className={`${jobs.length !== 0 ? "opacity-100" : "opacity-0"} transition-opacity duration-1000 ease-in-out`}>
-					{jobs.map((job) => {
-						return (
-							<div
-								key={job.id}
-								className="cursor-pointer bg-slate-400 w-80 p-2 mb-2 rounded select-none"
-								onClick={() => handleJobToggle(job)}
-							>
-								<p
-									className={`${
-										job.isOpen ? "font-bold" : ""
-									}`}
+					<div
+						className={`${
+							jobs.length !== 0 ? "opacity-100" : "opacity-0"
+						} transition-opacity duration-1000 ease-in-out`}
+					>
+						{jobs.map((job) => {
+							return (
+								<div
+									key={job.id}
+									className="cursor-pointer bg-slate-400 w-80 p-2 mb-2 rounded select-none"
+									onClick={() => handleJobToggle(job)}
 								>
-									{job.title}
-								</p>
-								{job.isOpen && (
-									<div className="text-orange-900">
-										<p>{job.company}</p>
-										<p>{job.publicationDate}</p>
-										<p>{job.skillList}</p>
-									</div>
-								)}
-							</div>
-						);
-					})}
+									<p
+										className={`${
+											job.isOpen ? "font-bold" : ""
+										}`}
+									>
+										{job.title}
+									</p>
+									{job.isOpen && (
+										<div className="text-orange-900">
+											<p>{job.company}</p>
+											<p>{job.publicationDate}</p>
+											<p>
+												{job.skills.map((skill) => {
+													return (
+														<>
+														<a className="underline" href={skill.url}>{skill.name}</a>,{' '}
+														</>
+													)
+												})}
+											</p>
+										</div>
+									)}
+								</div>
+							);
+						})}
 					</div>
 				</section>
 				<section>

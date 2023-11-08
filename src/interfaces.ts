@@ -6,6 +6,7 @@ export interface IJob {
 	url: string;
 	description: string;
 	skillList: string;
+	skills: ISkill[];
 	publicationDate: string;
 }
 
