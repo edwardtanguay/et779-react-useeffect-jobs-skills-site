@@ -42,7 +42,7 @@ function App() {
 				_job.skills = _jobSkills;
 			}
 			setJobs(_jobs);
-			setModalIsOpen(true)
+			setModalIsOpen(true);
 		})();
 
 		// one could also use then() but it has a less aesthetic syntax
@@ -87,8 +87,36 @@ function App() {
 				<h1 className="text-3xl ">Info Site</h1>
 				<p className="text-yellow-200">Toggles: {numberOfToggles}</p>
 			</header>
-			<ReactModal isOpen={modalIsOpen} onRequestClose={handleModalClose} className="flex justify-end p-4 mx-auto mt-20 w-1/2 bg-slate-400">
-				<button className="flex justify-center items-center" onClick={() => setModalIsOpen(false)}><FaRegWindowClose /></button>
+			<ReactModal
+				isOpen={modalIsOpen}
+				onRequestClose={handleModalClose}
+				className="p-4 mx-auto mt-20 w-1/2 bg-slate-400 flex flex-col"
+			>
+				<section className="flex justify-end ">
+					<div
+						className="flex justify-center items-center cursor-pointer"
+						onClick={() => setModalIsOpen(false)}
+					>
+						<FaRegWindowClose />
+					</div>
+				</section>
+				<h2 className="text-2xl mb-3">Cookie Consent</h2>
+				<p>
+					This website uses cookies to improve your experience while
+					you navigate through the website. Out of these cookies, the
+					cookies that are categorized as necessary are stored on your
+					browser as they are essential for the working of basic
+					functionalities of the website. We also use third-party
+					cookies that help us analyze and understand how you use this
+					website. These cookies will be stored in your browser only
+					with your consent. You also have the option to opt-out of
+					these cookies. But opting out of some of these cookies may
+					have an effect on your browsing experience.
+				</p>
+				<div className="flex gap-3 mt-3">
+					<button>Accept</button>
+					<button>Decline</button>
+				</div>
 			</ReactModal>
 			<div className="flex justify-around">
 				<section>
