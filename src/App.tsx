@@ -78,9 +78,18 @@ function App() {
 		setSkills(_skills);
 	};
 
-	const handleModalClose = () => {
+	const handleCookiesClose = () => {
 		setModalIsOpen(false);
 	};
+
+	const handleCookiesDecline = () => {
+		setModalIsOpen(false);
+	};
+
+	// const handleCookiesAccept = () => {
+
+	// }
+
 	return (
 		<>
 			<header className="mb-3 text-slate-300 p-4 bg-slate-700 flex items-center justify-between">
@@ -89,7 +98,7 @@ function App() {
 			</header>
 			<ReactModal
 				isOpen={modalIsOpen}
-				onRequestClose={handleModalClose}
+				onRequestClose={handleCookiesClose}
 				className="p-4 mx-auto mt-20 w-1/2 bg-slate-400 flex flex-col"
 			>
 				<section className="flex justify-end ">
@@ -115,7 +124,7 @@ function App() {
 				</p>
 				<div className="flex gap-3 mt-3">
 					<button>Accept</button>
-					<button>Decline</button>
+					<button onClick={handleCookiesDecline}>Decline</button>
 				</div>
 			</ReactModal>
 			<div className="flex justify-around">
